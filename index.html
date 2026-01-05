@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoalForge - Achieve Your Potential</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./css/design-system.css">
+  <style>
+    /* Landing specific styles */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .navbar {
+      padding: var(--space-lg) 0;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .logo span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: var(--space-2xl);
+    }
+
+    .hero-title {
+      font-size: 4rem;
+      line-height: 1.1;
+      margin-bottom: var(--space-lg);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto var(--space-xl);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-lg);
+      margin: var(--space-2xl) auto;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      transition: var(--transition-normal);
+    }
+
+    .feature-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-5px);
+    }
+
+    .bg-shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    .bg-shape-1 {
+      width: 500px;
+      height: 500px;
+      background: var(--primary);
+      top: -100px;
+      left: -100px;
+    }
+
+    .bg-shape-2 {
+      width: 400px;
+      height: 400px;
+      background: var(--secondary);
+      bottom: -50px;
+      right: -50px;
+    }
+
+    /* Stats Section */
+    .stats-container {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: var(--space-2xl) 0;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      font-family: var(--font-display);
+      color: var(--text-main);
+    }
+
+    .stat-label {
+      color: var(--text-dim);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  </style>
+  <link rel="stylesheet" href="./css/animations.css">
+</head>
+
+<body>
+  <div class="hero-section">
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <nav class="navbar">
+      <div class="container flex justify-between items-center">
+        <a href="/" class="logo animate-fade-in" style="animation-delay: 0.1s">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+            </path>
+          </svg>
+          Goal<span>Forge</span>
+        </a>
+        <div class="flex gap-md animate-fade-in" style="animation-delay: 0.2s">
+          <a href="/pages/auth.html" class="btn btn-outline">Sign In</a>
+          <a href="/pages/auth.html?mode=register" class="btn btn-primary">Get Started</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div class="container">
+        <h1 class="hero-title animate-fade-in text-gradient" style="animation-delay: 0.3s">
+          Forge Your Path<br>To Greatness
+        </h1>
+        <p class="hero-subtitle animate-fade-in" style="animation-delay: 0.4s">
+          The all-in-one AI-powered platform to track habits, compete with friends, and master any domain from coding to
+          fitness.
+        </p>
+        <div class="flex gap-md justify-center animate-fade-in" style="animation-delay: 0.5s">
+          <a href="/pages/auth.html?mode=register" class="btn btn-primary"
+            style="padding: 1rem 2.5rem; font-size: 1.1rem;">Start Your Journey</a>
+          <a href="#features" class="btn btn-outline" style="padding: 1rem 2.5rem; font-size: 1.1rem;">Explore
+            Features</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="features" class="container" style="padding: var(--space-2xl) 0;">
+    <div class="text-center mb-5 animate-on-scroll">
+      <h2 class="text-gradient" style="font-size: 2.5rem; margin-bottom: var(--space-sm);">Everything You Need</h2>
+      <p style="color: var(--text-muted);">One platform, limitless possibilities.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card animate-on-scroll animate-delay-100">
+        <div style="font-size: 2rem; margin-bottom: var(--space-md);">🤖</div>
+        <h3>AI Personalization</h3>
+        <p style="color: var(--text-dim); margin-top: var(--space-sm);">
+          Intelligent planning based on your schedule, lifestyle, and unique goals.
+        </p>
+      </div>
+
+      <div class="feature-card animate-on-scroll animate-delay-200">
+        <div style="font-size: 2rem; margin-bottom: var(--space-md);">🔥</div>
+        <h3>Streak Tracking</h3>
+        <p style="color: var(--text-dim); margin-top: var(--space-sm);">
+          Visualize your consistency with heat maps and maintain daily streaks.
+        </p>
+      </div>
+
+      <div class="feature-card animate-on-scroll animate-delay-300">
+        <div style="font-size: 2rem; margin-bottom: var(--space-md);">🏆</div>
+        <h3>Social Competition</h3>
+        <p style="color: var(--text-dim); margin-top: var(--space-sm);">
+          Challenge friends, climb leaderboards, and stay accountable together.
+        </p>
+      </div>
+
+      <div class="feature-card animate-on-scroll animate-delay-400">
+        <div style="font-size: 2rem; margin-bottom: var(--space-md);">💪</div>
+        <h3>Multi-Domain</h3>
+        <p style="color: var(--text-dim); margin-top: var(--space-sm);">
+          Track fitness, coding, reading, and academics all in one place.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-container animate-on-scroll slide-up">
+    <div class="container flex justify-between">
+      <div class="stat-item">
+        <div class="stat-value">100+</div>
+        <div class="stat-label">Habit Templates</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">24/7</div>
+        <div class="stat-label">AI Availability</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">10k+</div>
+        <div class="stat-label">Goals Achieved</div>
+      </div>
+    </div>
+  </div>
+
+  <footer
+    style="text-align: center; padding: var(--space-xl) 0; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-dim);">
+    <p>&copy; 2024 GoalForge. All rights reserved.</p>
+  </footer>
+  <script src="./js/animations.js"></script>
+</body>
+
+</html>

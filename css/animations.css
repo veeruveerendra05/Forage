@@ -1,0 +1,61 @@
+/* Scroll Animations */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    will-change: opacity, transform;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-delay-100 {
+    transition-delay: 100ms;
+}
+
+.animate-delay-200 {
+    transition-delay: 200ms;
+}
+
+.animate-delay-300 {
+    transition-delay: 300ms;
+}
+
+.animate-delay-400 {
+    transition-delay: 400ms;
+}
+
+.animate-delay-500 {
+    transition-delay: 500ms;
+}
+
+/* Different Animation Types */
+.slide-up {
+    transform: translateY(30px);
+}
+
+.slide-in-left {
+    transform: translateX(-50px);
+}
+
+.slide-in-left.visible {
+    transform: translateX(0);
+}
+
+.slide-in-right {
+    transform: translateX(50px);
+}
+
+.slide-in-right.visible {
+    transform: translateX(0);
+}
+
+.scale-up {
+    transform: scale(0.9);
+}
+
+.scale-up.visible {
+    transform: scale(1);
+}

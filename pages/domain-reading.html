@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading & Knowledge - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .stat-box {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: var(--space-xs);
+        }
+
+        .stat-change {
+            font-size: 0.875rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .book-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .book-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .book-cover {
+            height: 260px;
+            background: #2d2d3a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .book-info {
+            padding: var(--space-md);
+        }
+
+        .book-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .book-author {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .reading-progress {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: var(--space-md);
+            overflow: hidden;
+        }
+
+        .reading-bar {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            width: 0%;
+        }
+
+        .add-book-btn {
+            height: 100%;
+            min-height: 260px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-book-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div style="margin-bottom: var(--space-xl); padding-left: var(--space-md);">
+                <span
+                    style="font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em;">GoalForge</span>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="challenges.html" class="nav-item"><span>⚔️</span> Challenges</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item active"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2xl);">
+                <div>
+                    <div
+                        style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xs);">
+                        <a href="domains.html" style="color: var(--text-muted); text-decoration: none;">← Back to
+                            Domains</a>
+                    </div>
+                    <h1>📚 Reading & Knowledge</h1>
+                    <p style="color: var(--text-muted); margin-top: 4px;">Track books, articles, and build your
+                        knowledge base</p>
+                </div>
+                <!-- Goodreads Integration -->
+                <button class="btn btn-secondary" onclick="connectGoodreads()">🔗 Connect Goodreads</button>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">Books Read</div>
+                    <div class="stat-value" id="booksRead">12</div>
+                    <div class="stat-change">+2 this month</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Pages Read</div>
+                    <div class="stat-value" id="pagesRead">3,450</div>
+                    <div class="stat-change" style="color: var(--success);">Top 5%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Daily Average</div>
+                    <div class="stat-value">45m</div>
+                    <div class="stat-change">Streak: 8 days</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">To-Read List</div>
+                    <div class="stat-value">8</div>
+                    <div class="stat-change" style="color: var(--muted);">Next: "Atomic Habits"</div>
+                </div>
+            </div>
+
+            <h2 style="margin-bottom: var(--space-lg);">Currently Reading</h2>
+            <div class="book-grid" style="margin-bottom: var(--space-2xl);">
+                <div class="book-card" onclick="addBook()"
+                    style="cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); border: 2px dashed rgba(255,255,255,0.1);">
+                    <span style="font-size: 2rem; color: var(--text-muted);">+</span>
+                    <span style="color: var(--text-muted); margin-top: 8px;">Log New Book</span>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">📕</div>
+                    <div class="book-info">
+                        <div class="book-title">The Psychology of Money</div>
+                        <div class="book-author">Morgan Housel</div>
+                        <div class="reading-progress">
+                            <div class="reading-bar" style="width: 65%;"></div>
+                        </div>
+                        <div
+                            style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.75rem; color: var(--text-muted);">
+                            <span>152/245 pages</span>
+                            <span>65%</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="add-book-btn" onclick="addBook()" style="display: none;">
+                    <!-- Hidden as we moved it to grid -->
+                    <span style="font-size: 2rem;">+</span>
+                    <span>Log New Book</span>
+                </button>
+            </div>
+
+            <h2 style="margin-bottom: var(--space-lg);">Library</h2>
+            <div class="book-grid">
+                <div class="book-card">
+                    <div class="book-cover" style="background: #1e293b;">📘</div>
+                    <div class="book-info">
+                        <div class="book-title">Deep Work</div>
+                        <div class="book-author">Cal Newport</div>
+                        <div style="margin-top: 8px; font-size: 0.75rem; color: var(--success);">Completed Jan 2</div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover" style="background: #312e81;">📙</div>
+                    <div class="book-info">
+                        <div class="book-title">Atomic Habits</div>
+                        <div class="book-author">James Clear</div>
+                        <div style="margin-top: 8px; font-size: 0.75rem; color: var(--success);">Completed Dec 15</div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover" style="background: #312e11;">📗</div>
+                    <div class="book-info">
+                        <div class="book-title">Clean Code</div>
+                        <div class="book-author">Robert C. Martin</div>
+                        <div style="margin-top: 8px; font-size: 0.75rem; color: var(--success);">Completed Nov 20</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function connectGoodreads() {
+            const username = prompt("Enter your Goodreads Profile URL:");
+            if (username) {
+                alert("Goodreads Connected! Syncing library...");
+                // In a real app, this would fetch data
+                document.getElementById('booksRead').innerText = '42';
+                document.getElementById('pagesRead').innerText = '12,500';
+            }
+        }
+
+        function addBook() {
+            const title = prompt("Book Title:");
+            if (!title) return;
+
+            const author = prompt("Author:") || "Unknown Author";
+            const totalPages = prompt("Total Pages:") || "300";
+
+            // Add to "Currently Reading" grid or the list where the button is
+            // valid selector requires us to find the container. 
+            // In the HTML we saw .book-grid containing the .add-book-btn
+            const btn = document.querySelector('.add-book-btn');
+
+            if (btn) {
+                const newCard = document.createElement('div');
+                newCard.className = 'book-card';
+                newCard.innerHTML = `
+                    <div class="book-cover" style="background: #${Math.floor(Math.random() * 16777215).toString(16)}">📖</div>
+                    <div class="book-info">
+                        <div class="book-title">${title}</div>
+                        <div class="book-author">${author}</div>
+                        <div class="reading-progress">
+                            <div class="reading-bar" style="width: 0%;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.75rem; color: var(--text-muted);">
+                            <span>0/${totalPages} pages</span>
+                            <span>0%</span>
+                        </div>
+                    </div>
+                `;
+
+                // Insert before the add button
+                btn.parentNode.insertBefore(newCard, btn);
+            } else {
+                alert(`Added "${title}" to your library.`);
+            }
+        }
+    </script>
+</body>
+
+</html>

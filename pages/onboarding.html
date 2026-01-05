@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalizing Your Plan - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-md);
+        }
+
+        .onboarding-container {
+            width: 100%;
+            max-width: 600px;
+            margin-top: var(--space-xl);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            margin-bottom: var(--space-2xl);
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: var(--radius-full);
+        }
+
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2xl);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .question-header {
+            margin-bottom: var(--space-xl);
+        }
+
+        .step-indicator {
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+
+        .question-options {
+            display: grid;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .option-btn {
+            padding: var(--space-lg);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            text-align: left;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-main);
+        }
+
+        .option-btn:hover,
+        .option-btn.selected {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .option-btn.selected::after {
+            content: '✓';
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .nav-buttons {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Range Input Customization */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-surface);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: var(--space-lg);
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="onboarding-container">
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+
+        <div class="question-card animate-fade-in" id="card-content">
+            <!-- Generated via JS -->
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="plan-generator">
+        <div class="spinner"></div>
+        <h2 class="animate-pulse">Analyzing your lifestyle...</h2>
+        <p id="loading-text" style="color: var(--text-muted); margin-top: var(--space-sm);">Crafting your perfect
+            routine</p>
+    </div>
+
+    <script src="../js/onboarding.js" type="module"></script>
+</body>
+
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academics & Exams - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .course-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-md);
+        }
+
+        .grade-badge {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+        }
+
+        .assignment-list {
+            margin-top: var(--space-lg);
+        }
+
+        .assignment-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .deadline {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .pomodoro-timer {
+            background: var(--bg-card);
+            padding: var(--space-xl);
+            border-radius: var(--radius-2xl);
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .timer-display {
+            font-size: 4rem;
+            font-family: monospace;
+            font-weight: 700;
+            margin: var(--space-md) 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div style="margin-bottom: var(--space-xl); padding-left: var(--space-md);">
+                <span
+                    style="font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em;">GoalForge</span>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="challenges.html" class="nav-item"><span>⚔️</span> Challenges</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item active"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div style="margin-bottom: var(--space-2xl);">
+                <a href="domains.html" style="color: var(--text-muted); text-decoration: none;">← Back to Domains</a>
+                <h1 style="margin-top: var(--space-sm);">🎓 Academics & Exams</h1>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div style="font-size: 2.5rem;">4.0</div>
+                    <div>
+                        <div style="color: var(--text-muted); font-size: 0.875rem;">Current GPA</div>
+                        <div style="color: var(--success);">Top 1% in Class</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 2.5rem;">32</div>
+                    <div>
+                        <div style="color: var(--text-muted); font-size: 0.875rem;">Study Hours</div>
+                        <div style="color: var(--primary);">This Week</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div style="font-size: 2.5rem;">5</div>
+                    <div>
+                        <div style="color: var(--text-muted); font-size: 0.875rem;">Assignments</div>
+                        <div style="color: var(--warning);">Due Soon</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pomodoro-timer">
+                <h2>Study Timer</h2>
+                <div class="timer-display" id="timer">25:00</div>
+                <div style="display: flex; gap: var(--space-md); justify-content: center;">
+                    <button class="btn btn-primary" onclick="startTimer()">Start Focus</button>
+                    <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
+                </div>
+            </div>
+
+            <h2 style="margin-bottom: var(--space-lg);">Active Courses</h2>
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-header">
+                        <h3>Operating Systems</h3>
+                        <span class="grade-badge">A</span>
+                    </div>
+                    <p style="color: var(--text-muted);">CS-301 • Prof. Smith</p>
+                    <div class="assignment-list">
+                        <div class="assignment-item">
+                            <input type="checkbox">
+                            <span>Process Scheduling Lab</span>
+                            <span class="deadline" style="color: var(--warning);">Tomorrow</span>
+                        </div>
+                        <div class="assignment-item">
+                            <input type="checkbox">
+                            <span>Midterm Review</span>
+                            <span class="deadline">In 3 days</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-header">
+                        <h3>Database Systems</h3>
+                        <span class="grade-badge">A-</span>
+                    </div>
+                    <p style="color: var(--text-muted);">CS-302 • Prof. Johnson</p>
+                    <div class="assignment-list">
+                        <div class="assignment-item">
+                            <input type="checkbox">
+                            <span>SQL Query Project</span>
+                            <span class="deadline">In 5 days</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-card"
+                    style="display: grid; place-items: center; border-style: dashed; cursor: pointer;"
+                    onclick="addCourse()">
+                    <div style="text-align: center;">
+                        <span style="font-size: 2rem; color: var(--text-muted);">+</span>
+                        <div style="margin-top: var(--space-sm); color: var(--text-muted);">Add New Course</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let timeLeft = 25 * 60;
+        let timerId = null;
+
+        function startTimer() {
+            if (timerId) return;
+
+            const btn = document.querySelector('button[onclick="startTimer()"]');
+            btn.textContent = 'Pause Focus';
+            btn.onclick = pauseTimer;
+            btn.classList.add('active');
+
+            timerId = setInterval(() => {
+                timeLeft--;
+                updateDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    alert("Focus session complete! Take a break.");
+                    resetTimer();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerId);
+            timerId = null;
+            // Update button UI
+            const btns = document.querySelectorAll('.pomodoro-timer button');
+            const startBtn = btns[0];
+            startBtn.textContent = 'Resume Focus';
+            startBtn.onclick = startTimer;
+            startBtn.classList.remove('active');
+        }
+
+        function resetTimer() {
+            clearInterval(timerId);
+            timerId = null;
+            timeLeft = 25 * 60;
+            updateDisplay();
+            const btns = document.querySelectorAll('.pomodoro-timer button');
+            const startBtn = btns[0];
+            startBtn.textContent = 'Start Focus';
+            startBtn.onclick = startTimer;
+            startBtn.classList.remove('active');
+        }
+
+        function updateDisplay() {
+            const m = Math.floor(timeLeft / 60);
+            const s = timeLeft % 60;
+            document.getElementById('timer').textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function addCourse() {
+            const name = prompt("Enter Course Name (e.g., Physics 101):");
+            if (!name) return;
+
+            const prof = prompt("Enter Professor Name:");
+            const grade = prompt("Current Grade (optional):") || "N/A";
+
+            const grid = document.querySelector('.course-grid');
+            const addCard = grid.lastElementChild;
+
+            const newCard = document.createElement('div');
+            newCard.className = 'course-card';
+            newCard.innerHTML = `
+                <div class="course-header">
+                    <h3>${name}</h3>
+                    <span class="grade-badge">${grade}</span>
+                </div>
+                <p style="color: var(--text-muted);">${prof}</p>
+                <div class="assignment-list">
+                    <div style="text-align: center; color: var(--text-muted); font-size: 0.875rem; padding: var(--space-md);">
+                        No assignments yet
+                    </div>
+                </div>
+            `;
+
+            grid.insertBefore(newCard, addCard);
+        }
+    </script>
+</body>
+
+</html>

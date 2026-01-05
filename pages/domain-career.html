@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career & Skills - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .timeline {
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            margin-left: 20px;
+            padding-left: 30px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            position: absolute;
+            left: -39px;
+            top: 4px;
+            border: 3px solid var(--bg-app);
+        }
+
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .skill-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-top: var(--space-md);
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div style="margin-bottom: var(--space-xl); padding-left: var(--space-md);">
+                <span
+                    style="font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em;">GoalForge</span>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="challenges.html" class="nav-item"><span>⚔️</span> Challenges</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item active"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div style="margin-bottom: var(--space-2xl);">
+                <a href="domains.html" style="color: var(--text-muted); text-decoration: none;">← Back to Domains</a>
+                <h1 style="margin-top: var(--space-sm);">💼 Career & Skills</h1>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-2xl);">
+                <div>
+                    <h2 style="margin-bottom: var(--space-lg);">Skill Mastery</h2>
+                    <div class="skill-grid">
+                        <div class="skill-card">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>JavaScript</span>
+                                <span style="color: var(--primary);">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Project Mgmt</span>
+                                <span style="color: var(--primary);">60%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 60%;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-card">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Public Speaking</span>
+                                <span style="color: var(--primary);">40%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 40%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin-bottom: var(--space-lg);">Career Roadmap</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <h3 style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 4px;">2026 Goal
+                            </h3>
+                            <h4 style="font-size: 1.25rem;">Senior Software Engineer</h4>
+                            <p style="color: var(--text-muted);">Lead a team of 4-5 developers and architect core
+                                systems.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"
+                                style="background: var(--bg-card); border-color: var(--text-muted);"></div>
+                            <h3 style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 4px;">2025 Achieved
+                            </h3>
+                            <h4 style="font-size: 1.25rem;">Full Stack Developer</h4>
+                            <p style="color: var(--text-muted);">Mastered React, Node.js, and Cloud Infrastructure.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div
+                        style="background: var(--bg-card); padding: var(--space-lg); border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.05);">
+                        <div
+                            style="width: 60px; height: 60px; background: #0077b5; border-radius: var(--radius-md); font-size: 2rem; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);">
+                            in</div>
+                        <h3 id="linkedin-title">LinkedIn Profile</h3>
+                        <p id="linkedin-desc" style="color: var(--text-muted); margin-bottom: var(--space-lg);">Optimize
+                            your profile to attract recruiters.</p>
+                        <button id="connect-linkedin" class="btn btn-secondary" style="width: 100%;"
+                            onclick="connectLinkedIn()">Connect LinkedIn</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        function connectLinkedIn() {
+            const btn = document.getElementById('connect-linkedin');
+            const title = document.getElementById('linkedin-title');
+            const desc = document.getElementById('linkedin-desc');
+
+            if (btn.innerText.includes('Connect')) {
+                const profile = prompt("Enter LinkedIn Profile URL:");
+                if (profile) {
+                    btn.innerText = "Disconnect LinkedIn";
+                    title.innerText = "LinkedIn Connected";
+                    desc.innerText = "Profile synced: " + profile;
+                    desc.style.color = "#10b981";
+                    alert("LinkedIn profile connected! Job recommendations enabled.");
+                }
+            } else {
+                if (confirm("Disconnect LinkedIn?")) {
+                    btn.innerText = "Connect LinkedIn";
+                    title.innerText = "LinkedIn Profile";
+                    desc.innerText = "Optimize your profile to attract recruiters.";
+                    desc.style.color = "var(--text-muted)";
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

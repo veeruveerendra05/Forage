@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance & Budget - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: var(--space-xl);
+            border-radius: var(--radius-xl);
+            color: white;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .balance-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-bottom: var(--space-xs);
+        }
+
+        .balance-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+        }
+
+        .expense-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-md);
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-sm);
+        }
+
+        .expense-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--space-xl);
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div style="margin-bottom: var(--space-xl); padding-left: var(--space-md);">
+                <span
+                    style="font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em;">GoalForge</span>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="challenges.html" class="nav-item"><span>⚔️</span> Challenges</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item active"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div style="margin-bottom: var(--space-2xl);">
+                <a href="domains.html" style="color: var(--text-muted); text-decoration: none;">← Back to Domains</a>
+                <h1 style="margin-top: var(--space-sm);">💰 Finance & Budget</h1>
+            </div>
+
+            <div class="grid-layout">
+                <div>
+                    <div class="balance-card">
+                        <div class="balance-label">Total Balance</div>
+                        <div class="balance-amount">$12,450.00</div>
+                        <div style="margin-top: var(--space-lg); display: flex; gap: var(--space-xl);">
+                            <div>
+                                <div style="font-size: 0.875rem; opacity: 0.9;">Income</div>
+                                <div style="font-weight: 600;">+$4,200.00</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.875rem; opacity: 0.9;">Expenses</div>
+                                <div style="font-weight: 600;">-$1,150.00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 style="margin-bottom: var(--space-lg);">Recent Transactions</h2>
+                    <div class="expense-row">
+                        <div style="display: flex; align-items: center; gap: var(--space-md);">
+                            <div class="expense-icon">🛒</div>
+                            <div>
+                                <div style="font-weight: 500;">Grocery Store</div>
+                                <div style="font-size: 0.875rem; color: var(--text-muted);">Food & Dining</div>
+                            </div>
+                        </div>
+                        <div style="font-weight: 600; color: #ef4444;">-$85.20</div>
+                    </div>
+                    <div class="expense-row">
+                        <div style="display: flex; align-items: center; gap: var(--space-md);">
+                            <div class="expense-icon">💼</div>
+                            <div>
+                                <div style="font-weight: 500;">Freelance Project</div>
+                                <div style="font-size: 0.875rem; color: var(--text-muted);">Income</div>
+                            </div>
+                        </div>
+                        <div style="font-weight: 600; color: #10b981;">+$500.00</div>
+                    </div>
+                    <div class="expense-row">
+                        <div style="display: flex; align-items: center; gap: var(--space-md);">
+                            <div class="expense-icon">🎬</div>
+                            <div>
+                                <div style="font-weight: 500;">Netflix Subscription</div>
+                                <div style="font-size: 0.875rem; color: var(--text-muted);">Entertainment</div>
+                            </div>
+                        </div>
+                        <div style="font-weight: 600; color: #ef4444;">-$15.99</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 style="margin-bottom: var(--space-lg);">Monthly Limit</h2>
+                    <div class="chart-placeholder">
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 8px;">$1,150 / $2,000</div>
+                            <div style="color: var(--text-muted);">57% Used</div>
+                            <div
+                                style="width: 200px; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin: 16px auto; overflow: hidden;">
+                                <div style="width: 57%; height: 100%; background: var(--primary);"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: var(--space-lg);"
+                        onclick="addTransaction()">+ Add Transaction</button>
+                    <button id="connect-bank-btn" class="btn btn-secondary"
+                        style="width: 100%; margin-top: var(--space-sm);" onclick="connectBank()">Connect Bank
+                        Account</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function addTransaction() {
+            const name = prompt("Transaction Name:");
+            if (!name) return;
+
+            const amountStr = prompt("Amount (use - for expense, + for income):");
+            const amount = parseFloat(amountStr);
+            if (isNaN(amount)) return alert("Invalid amount");
+
+            // Locate the container where transactions live
+            // Structure is: .grid-layout > div:first-child > balance-card, h2, row, row...
+            const parent = document.querySelector('.grid-layout > div:first-child');
+            const newRow = document.createElement('div');
+            newRow.className = 'expense-row';
+
+            const isExpense = amount < 0;
+            const icon = isExpense ? '💸' : '💰';
+            const color = isExpense ? '#ef4444' : '#10b981';
+            const sign = isExpense ? '' : '+';
+
+            newRow.innerHTML = `
+                <div style="display: flex; align-items: center; gap: var(--space-md);">
+                    <div class="expense-icon">${icon}</div>
+                    <div>
+                        <div style="font-weight: 500;">${name}</div>
+                        <div style="font-size: 0.875rem; color: var(--text-muted);">Manual Entry</div>
+                    </div>
+                </div>
+                <div style="font-weight: 600; color: ${color};">${sign}$${Math.abs(amount).toFixed(2)}</div>
+            `;
+
+            // Insert after the "Recent Transactions" header
+            const header = parent.querySelector('h2');
+            header.insertAdjacentElement('afterend', newRow);
+        }
+
+        function connectBank() {
+            const btn = document.getElementById('connect-bank-btn');
+            if (btn.innerText.includes('Connect')) {
+                const bank = prompt("Enter Bank Name (simulate Plaid):", "Chase");
+                if (bank) {
+                    btn.innerText = `✓ Connected to ${bank}`;
+                    btn.classList.add('btn-success'); // Assuming this class exists or styles will fallback
+                    btn.style.color = '#10b981';
+                    btn.style.borderColor = '#10b981';
+                    alert(`Successfully connected to ${bank}. Syncing recent transactions...`);
+                }
+            } else {
+                if (confirm("Disconnect bank account?")) {
+                    btn.innerText = "Connect Bank Account";
+                    btn.style.color = '';
+                    btn.style.borderColor = '';
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

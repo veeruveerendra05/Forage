@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        /* Reuse layout */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .podium-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: var(--space-md);
+            margin: var(--space-2xl) 0;
+            height: 300px;
+        }
+
+        .podium-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 120px;
+        }
+
+        .podium-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid var(--bg-surface);
+            margin-bottom: var(--space-md);
+            position: relative;
+        }
+
+        .podium-rank {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border: 2px solid currentColor;
+        }
+
+        .podium-block {
+            width: 100%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+            border-top-left-radius: var(--radius-lg);
+            border-top-right-radius: var(--radius-lg);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: var(--space-md);
+            position: relative;
+        }
+
+        .gold {
+            height: 180px;
+            color: #fbbf24;
+        }
+
+        .silver {
+            height: 140px;
+            color: #94a3b8;
+        }
+
+        .bronze {
+            height: 100px;
+            color: #b45309;
+        }
+
+        .rank-list {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+
+        .rank-item {
+            display: flex;
+            align-items: center;
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background var(--transition-fast);
+        }
+
+        .rank-item:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .rank-item:last-child {
+            border-bottom: none;
+        }
+
+        .rank-badge {
+            width: 30px;
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a href="/" class="logo"
+                style="display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; margin-bottom: var(--space-2xl); color: white;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)">
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                    </path>
+                </svg>
+                Goal<span style="color: #8b5cf6;">Forge</span>
+            </a>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="leaderboard.html" class="nav-item active"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>Weekly Leaderboard</h1>
+                <div class="flex gap-md">
+                    <select
+                        style="background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 8px 16px; border-radius: 8px;">
+                        <option>Global</option>
+                        <option>Friends</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="leaderboard-content" style="display: none;">
+                <div class="podium-container" id="podium-container">
+                    <!-- Podium items injected by JS -->
+                </div>
+
+                <div class="rank-list" id="rank-list">
+                    <!-- List items injected by JS -->
+                </div>
+            </div>
+
+            <div id="loading-state" style="text-align: center; padding: var(--space-2xl); color: var(--text-muted);">
+                <div style="font-size: 2rem; margin-bottom: var(--space-md);">🏆</div>
+                <p>Loading rankings...</p>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="../js/leaderboard.js"></script>
+    </main>
+    </div>
+</body>
+
+</html>

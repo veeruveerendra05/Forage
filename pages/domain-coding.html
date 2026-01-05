@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding & LeetCode - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .stat-box {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .problem-table {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 60px 1fr 120px 100px 100px;
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .table-row:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .table-header {
+            background: rgba(255, 255, 255, 0.02);
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .difficulty-badge {
+            padding: 4px 12px;
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .difficulty-easy {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .difficulty-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .difficulty-hard {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .timer-display {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: var(--font-display);
+            text-align: center;
+            margin: var(--space-xl) 0;
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a href="/" class="logo"
+                style="display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; margin-bottom: var(--space-2xl); color: white;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)">
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                    </path>
+                </svg>
+                Goal<span style="color: #8b5cf6;">Forge</span>
+            </a>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="challenges.html" class="nav-item"><span>⚔️</span> Challenges</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item active"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2xl);">
+                <div>
+                    <div
+                        style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xs);">
+                        <a href="domains.html" style="color: var(--text-muted); text-decoration: none;">← Back to
+                            Domains</a>
+                    </div>
+                    <h1>💻 Coding & LeetCode</h1>
+                    <p style="color: var(--text-muted); margin-top: 4px;">Master algorithms, data structures, and system
+                        design</p>
+                </div>
+                <button class="btn btn-primary" onclick="openAddProblemModal()">➕ Add Problem</button>
+            </div>
+
+            <!-- Integration Cards -->
+            <div class="integration-container" style="margin-bottom: var(--space-2xl);">
+                <h2 style="font-size: 1.25rem; margin-bottom: var(--space-lg);">🔗 Connect Your Accounts</h2>
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-lg);">
+                    <!-- LeetCode Integration -->
+                    <div class="integration-card"
+                        style="background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--radius-lg); padding: var(--space-lg);">
+                        <div
+                            style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+                            <div
+                                style="width: 48px; height: 48px; background: linear-gradient(135deg, #FFA116 0%, #FF6C00 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px;">
+                                💡</div>
+                            <div>
+                                <h3 style="font-size: 1.125rem; font-weight: 600;">LeetCode</h3>
+                                <span id="leetcodeStatus" style="font-size: 0.875rem; color: var(--text-muted);">Not
+                                    Connected</span>
+                            </div>
+                        </div>
+                        <div id="leetcodeStats" style="display: none; margin-bottom: var(--space-md);">
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-sm);">
+                                <div
+                                    style="text-align: center; padding: var(--space-sm); background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md);">
+                                    <div id="leetcodeEasy"
+                                        style="font-size: 1.25rem; font-weight: 600; color: #10b981;">0</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Easy</div>
+                                </div>
+                                <div
+                                    style="text-align: center; padding: var(--space-sm); background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md);">
+                                    <div id="leetcodeMedium"
+                                        style="font-size: 1.25rem; font-weight: 600; color: #f59e0b;">0</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Medium</div>
+                                </div>
+                                <div
+                                    style="text-align: center; padding: var(--space-sm); background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md);">
+                                    <div id="leetcodeHard"
+                                        style="font-size: 1.25rem; font-weight: 600; color: #ef4444;">0</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Hard</div>
+                                </div>
+                            </div>
+                            <div
+                                style="margin-top: var(--space-sm); font-size: 0.875rem; color: var(--text-muted); text-align: center;">
+                                Rank: <span id="leetcodeRank"
+                                    style="color: var(--primary); font-weight: 600;">N/A</span>
+                            </div>
+                        </div>
+                        <button id="connectLeetCode" class="btn-secondary" style="width: 100%;"
+                            onclick="connectLeetCode()">Connect LeetCode</button>
+                    </div>
+
+                    <!-- CodeChef Integration -->
+                    <div class="integration-card"
+                        style="background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--radius-lg); padding: var(--space-lg);">
+                        <div
+                            style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+                            <div
+                                style="width: 48px; height: 48px; background: linear-gradient(135deg, #8B4513 0%, #654321 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px;">
+                                👨‍🍳</div>
+                            <div>
+                                <h3 style="font-size: 1.125rem; font-weight: 600;">CodeChef</h3>
+                                <span id="codechefStatus" style="font-size: 0.875rem; color: var(--text-muted);">Not
+                                    Connected</span>
+                            </div>
+                        </div>
+                        <div id="codechefStats" style="display: none; margin-bottom: var(--space-md);">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm);">
+                                <div
+                                    style="text-align: center; padding: var(--space-sm); background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md);">
+                                    <div id="codechefRating"
+                                        style="font-size: 1.25rem; font-weight: 600; color: var(--primary);">0</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Rating</div>
+                                </div>
+                                <div
+                                    style="text-align: center; padding: var(--space-sm); background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-md);">
+                                    <div id="codechefStars"
+                                        style="font-size: 1.25rem; font-weight: 600; color: #f59e0b;">⭐</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">Stars</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: var(--space-sm);">
+                                <div
+                                    style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: var(--space-xs);">
+                                    Global Rank: <span id="codechefRank"
+                                        style="color: var(--primary); font-weight: 600;">N/A</span></div>
+                                <div style="font-size: 0.875rem; color: var(--text-muted);">Problems Solved: <span
+                                        id="codechefSolved" style="color: var(--success); font-weight: 600;">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="connectCodeChef" class="btn-secondary" style="width: 100%;"
+                            onclick="connectCodeChef()">Connect CodeChef</button>
+                    </div>
+
+                    <!-- GitHub Integration -->
+                    <div class="integration-card"
+                        style="background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--radius-lg); padding: var(--space-lg);">
+                        <div
+                            style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md);">
+                            <div
+                                style="width: 48px; height: 48px; background: linear-gradient(135deg, #333 0%, #000 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px;">
+                                🐙</div>
+                            <div>
+                                <h3 style="font-size: 1.125rem; font-weight: 600;">GitHub</h3>
+                                <span id="githubStatus" style="font-size: 0.875rem; color: var(--text-muted);">Not
+                                    Connected</span>
+                            </div>
+                        </div>
+                        <div id="githubStats" style="display: none; margin-bottom: var(--space-md);">
+                            <div style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.6;">
+                                <div>Commits This Week: <span id="githubCommits"
+                                        style="color: var(--success); font-weight: 600;">0</span></div>
+                                <div>Current Streak: <span id="githubStreak"
+                                        style="color: var(--warning); font-weight: 600;">0 days</span></div>
+                                <div>Repositories: <span id="githubRepos"
+                                        style="color: var(--primary); font-weight: 600;">0</span></div>
+                            </div>
+                        </div>
+                        <button id="connectGitHub" class="btn-secondary" style="width: 100%;"
+                            onclick="connectGitHub()">Connect GitHub</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">Total Solved</div>
+                    <div class="stat-value" id="total-solved">0</div>
+                    <div class="stat-change">+0 this week</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Easy</div>
+                    <div class="stat-value" style="color: #10b981;" id="easy-solved">0</div>
+                    <div class="stat-change">of 0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Medium</div>
+                    <div class="stat-value" style="color: #f59e0b;" id="medium-solved">0</div>
+                    <div class="stat-change">of 0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Hard</div>
+                    <div class="stat-value" style="color: #ef4444;" id="hard-solved">0</div>
+                    <div class="stat-change">of 0</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs" style="margin-bottom: var(--space-xl);">
+                <button class="tab-btn active" onclick="switchTab('problems')">Problems</button>
+                <button class="tab-btn" onclick="switchTab('timer')">Timer</button>
+                <button class="tab-btn" onclick="switchTab('notes')">Notes</button>
+            </div>
+
+            <!-- Problems Tab -->
+            <div id="tab-problems" class="tab-content active">
+                <div class="problem-table">
+                    <div class="table-row table-header">
+                        <div>Status</div>
+                        <div>Problem</div>
+                        <div>Difficulty</div>
+                        <div>Category</div>
+                        <div>Actions</div>
+                    </div>
+                    <div id="problems-list">
+                        <div style="text-align: center; padding: var(--space-2xl); color: var(--text-muted);">
+                            <div style="font-size: 3rem; margin-bottom: var(--space-md);">💻</div>
+                            <p>No problems added yet</p>
+                            <p style="font-size: 0.875rem; margin-top: var(--space-sm);">Add your first LeetCode problem
+                                to start tracking!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timer Tab -->
+            <div id="tab-timer" class="tab-content" style="display: none;">
+                <div class="stat-box" style="max-width: 600px; margin: 0 auto; text-align: center;">
+                    <h2 style="margin-bottom: var(--space-lg);">⏱️ Coding Timer</h2>
+                    <div class="timer-display" id="timer-display">00:00:00</div>
+                    <div
+                        style="display: flex; gap: var(--space-md); justify-content: center; margin-top: var(--space-xl);">
+                        <button class="btn btn-primary" id="timer-start" onclick="startTimer()">Start</button>
+                        <button class="btn btn-outline" id="timer-pause" onclick="pauseTimer()" disabled>Pause</button>
+                        <button class="btn btn-outline" onclick="resetTimer()">Reset</button>
+                    </div>
+                    <p style="color: var(--text-muted); margin-top: var(--space-lg); font-size: 0.875rem;">Track your
+                        problem-solving time</p>
+                </div>
+            </div>
+
+            <!-- Notes Tab -->
+            <div id="tab-notes" class="tab-content" style="display: none;">
+                <div class="stat-box">
+                    <h2 style="margin-bottom: var(--space-lg);">📝 Coding Notes</h2>
+                    <textarea id="coding-notes" placeholder="Write your notes, patterns, and learnings here..."
+                        style="width: 100%; min-height: 400px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-md); padding: var(--space-md); color: white; font-family: monospace; resize: vertical;"></textarea>
+                    <button class="btn btn-primary" style="margin-top: var(--space-md);" onclick="saveNotes()">Save
+                        Notes</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Problem Modal -->
+    <div id="add-problem-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Add Problem</h2>
+                <button class="close-btn" onclick="closeAddProblemModal()">&times;</button>
+            </div>
+            <form id="add-problem-form" onsubmit="addProblem(event)">
+                <div class="form-group">
+                    <label class="form-label">Problem Name</label>
+                    <input type="text" class="form-input" id="problem-name" required placeholder="Two Sum">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Difficulty</label>
+                        <select class="form-select" id="problem-difficulty" required>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" id="problem-category" required>
+                            <option value="array">Array</option>
+                            <option value="string">String</option>
+                            <option value="tree">Tree</option>
+                            <option value="graph">Graph</option>
+                            <option value="dp">Dynamic Programming</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display: flex; gap: var(--space-md); margin-top: var(--space-xl);">
+                    <button type="button" class="btn btn-outline" style="flex: 1;"
+                        onclick="closeAddProblemModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Add Problem</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let problems = [];
+        let timerInterval = null;
+        let timerSeconds = 0;
+
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tabName}`).style.display = 'block';
+        }
+
+        // Modal functions
+        function openAddProblemModal() {
+            document.getElementById('add-problem-modal').classList.add('active');
+        }
+
+        function closeAddProblemModal() {
+            document.getElementById('add-problem-modal').classList.remove('active');
+            document.getElementById('add-problem-form').reset();
+        }
+
+        // Add problem
+        function addProblem(event) {
+            event.preventDefault();
+
+            const problem = {
+                id: Date.now(),
+                name: document.getElementById('problem-name').value,
+                difficulty: document.getElementById('problem-difficulty').value,
+                category: document.getElementById('problem-category').value,
+                solved: false
+            };
+
+            problems.push(problem);
+            renderProblems();
+            updateStats();
+            closeAddProblemModal();
+        }
+
+        // Render problems
+        function renderProblems() {
+            const container = document.getElementById('problems-list');
+
+            if (problems.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: var(--space-2xl); color: var(--text-muted);">
+                        <div style="font-size: 3rem; margin-bottom: var(--space-md);">💻</div>
+                        <p>No problems added yet</p>
+                        <p style="font-size: 0.875rem; margin-top: var(--space-sm);">Add your first LeetCode problem to start tracking!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = problems.map(p => `
+                <div class="table-row">
+                    <div>
+                        <input type="checkbox" ${p.solved ? 'checked' : ''} onchange="toggleSolved(${p.id})" style="width: 20px; height: 20px; cursor: pointer;">
+                    </div>
+                    <div style="font-weight: 500;">${p.name}</div>
+                    <div><span class="difficulty-badge difficulty-${p.difficulty}">${p.difficulty}</span></div>
+                    <div style="text-transform: capitalize;">${p.category}</div>
+                    <div>
+                        <button class="btn btn-outline" style="padding: 4px 12px; font-size: 0.75rem;" onclick="deleteProblem(${p.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Toggle solved
+        function toggleSolved(id) {
+            const problem = problems.find(p => p.id === id);
+            if (problem) {
+                problem.solved = !problem.solved;
+                updateStats();
+            }
+        }
+
+        // Delete problem
+        function deleteProblem(id) {
+            problems = problems.filter(p => p.id !== id);
+            renderProblems();
+            updateStats();
+        }
+
+        // Update stats
+        function updateStats() {
+            const solved = problems.filter(p => p.solved);
+            const easy = problems.filter(p => p.difficulty === 'easy');
+            const medium = problems.filter(p => p.difficulty === 'medium');
+            const hard = problems.filter(p => p.difficulty === 'hard');
+
+            document.getElementById('total-solved').textContent = solved.length;
+            document.getElementById('easy-solved').textContent = easy.filter(p => p.solved).length;
+            document.getElementById('medium-solved').textContent = medium.filter(p => p.solved).length;
+            document.getElementById('hard-solved').textContent = hard.filter(p => p.solved).length;
+
+            document.querySelector('#easy-solved + .stat-change').textContent = `of ${easy.length}`;
+            document.querySelector('#medium-solved + .stat-change').textContent = `of ${medium.length}`;
+            document.querySelector('#hard-solved + .stat-change').textContent = `of ${hard.length}`;
+        }
+
+        // Timer functions
+        function startTimer() {
+            if (timerInterval) return;
+
+            timerInterval = setInterval(() => {
+                timerSeconds++;
+                updateTimerDisplay();
+            }, 1000);
+
+            document.getElementById('timer-start').disabled = true;
+            document.getElementById('timer-pause').disabled = false;
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            document.getElementById('timer-start').disabled = false;
+            document.getElementById('timer-pause').disabled = true;
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timerSeconds = 0;
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const hours = Math.floor(timerSeconds / 3600);
+            const minutes = Math.floor((timerSeconds % 3600) / 60);
+            const seconds = timerSeconds % 60;
+
+            document.getElementById('timer-display').textContent =
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // Save notes
+        function saveNotes() {
+            const notes = document.getElementById('coding-notes').value;
+            localStorage.setItem('coding-notes', notes);
+            alert('Notes saved!');
+        }
+
+        // Load notes
+        function loadNotes() {
+            const notes = localStorage.getItem('coding-notes');
+            if (notes) {
+                document.getElementById('coding-notes').value = notes;
+            }
+        }
+
+        // Integration Functions
+        function connectLeetCode() {
+            const username = prompt('Enter your LeetCode username:');
+            if (username) {
+                localStorage.setItem('leetcode_username', username);
+                updateLeetCodeUI(username);
+                alert('✓ LeetCode connected successfully!');
+            }
+        }
+
+        function updateLeetCodeUI(username) {
+            document.getElementById('leetcodeStatus').textContent = `Connected: ${username}`;
+            document.getElementById('leetcodeStatus').style.color = 'var(--success)';
+            document.getElementById('leetcodeStats').style.display = 'block';
+            document.getElementById('connectLeetCode').textContent = 'Disconnect';
+            document.getElementById('connectLeetCode').onclick = disconnectLeetCode;
+
+            // Simulate fetching stats
+            document.getElementById('leetcodeEasy').textContent = '45';
+            document.getElementById('leetcodeMedium').textContent = '78';
+            document.getElementById('leetcodeHard').textContent = '23';
+            document.getElementById('leetcodeRank').textContent = '12,345';
+        }
+
+        function disconnectLeetCode() {
+            if (confirm('Disconnect LeetCode account?')) {
+                localStorage.removeItem('leetcode_username');
+                document.getElementById('leetcodeStatus').textContent = 'Not Connected';
+                document.getElementById('leetcodeStatus').style.color = 'var(--text-muted)';
+                document.getElementById('leetcodeStats').style.display = 'none';
+                document.getElementById('connectLeetCode').textContent = 'Connect LeetCode';
+                document.getElementById('connectLeetCode').onclick = connectLeetCode;
+            }
+        }
+
+        function connectCodeChef() {
+            const username = prompt('Enter your CodeChef username:');
+            if (username) {
+                localStorage.setItem('codechef_username', username);
+                updateCodeChefUI(username);
+                alert('✓ CodeChef connected successfully!');
+            }
+        }
+
+        function updateCodeChefUI(username) {
+            document.getElementById('codechefStatus').textContent = `Connected: ${username}`;
+            document.getElementById('codechefStatus').style.color = 'var(--success)';
+            document.getElementById('codechefStats').style.display = 'block';
+            document.getElementById('connectCodeChef').textContent = 'Disconnect';
+            document.getElementById('connectCodeChef').onclick = disconnectCodeChef;
+
+            // Simulate fetching stats
+            document.getElementById('codechefRating').textContent = '1845';
+            document.getElementById('codechefStars').textContent = '⭐⭐⭐';
+            document.getElementById('codechefRank').textContent = '8,234';
+            document.getElementById('codechefSolved').textContent = '156';
+        }
+
+        function disconnectCodeChef() {
+            if (confirm('Disconnect CodeChef account?')) {
+                localStorage.removeItem('codechef_username');
+                document.getElementById('codechefStatus').textContent = 'Not Connected';
+                document.getElementById('codechefStatus').style.color = 'var(--text-muted)';
+                document.getElementById('codechefStats').style.display = 'none';
+                document.getElementById('connectCodeChef').textContent = 'Connect CodeChef';
+                document.getElementById('connectCodeChef').onclick = connectCodeChef;
+            }
+        }
+
+        function connectGitHub() {
+            const username = prompt('Enter your GitHub username:');
+            if (username) {
+                localStorage.setItem('github_username', username);
+                updateGitHubUI(username);
+                alert('✓ GitHub connected successfully!');
+            }
+        }
+
+        function updateGitHubUI(username) {
+            document.getElementById('githubStatus').textContent = `Connected: ${username}`;
+            document.getElementById('githubStatus').style.color = 'var(--success)';
+            document.getElementById('githubStats').style.display = 'block';
+            document.getElementById('connectGitHub').textContent = 'Disconnect';
+            document.getElementById('connectGitHub').onclick = disconnectGitHub;
+
+            // Simulate fetching stats
+            document.getElementById('githubCommits').textContent = '24';
+            document.getElementById('githubStreak').textContent = '12 days';
+            document.getElementById('githubRepos').textContent = '18';
+        }
+
+        function disconnectGitHub() {
+            if (confirm('Disconnect GitHub account?')) {
+                localStorage.removeItem('github_username');
+                document.getElementById('githubStatus').textContent = 'Not Connected';
+                document.getElementById('githubStatus').style.color = 'var(--text-muted)';
+                document.getElementById('githubStats').style.display = 'none';
+                document.getElementById('connectGitHub').textContent = 'Connect GitHub';
+                document.getElementById('connectGitHub').onclick = connectGitHub;
+            }
+        }
+
+        // Initialize
+        loadNotes();
+
+        // Check for connected accounts
+        const leetcodeUser = localStorage.getItem('leetcode_username');
+        if (leetcodeUser) updateLeetCodeUI(leetcodeUser);
+
+        const codechefUser = localStorage.getItem('codechef_username');
+        if (codechefUser) updateCodeChefUI(codechefUser);
+
+        const githubUser = localStorage.getItem('github_username');
+        if (githubUser) updateGitHubUI(githubUser);
+
+        renderProblems();
+        updateStats();
+    </script>
+</body>
+
+</html>

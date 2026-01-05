@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindfulness - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .meditation-circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 8px solid rgba(255, 255, 255, 0.05);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .meditation-circle::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 8px solid transparent;
+            border-top-color: #8b5cf6;
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .mood-btn {
+            aspect-ratio: 1;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mood-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div style="margin-bottom: var(--space-xl); padding-left: var(--space-md);">
+                <span
+                    style="font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em;">GoalForge</span>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="challenges.html" class="nav-item"><span>⚔️</span> Challenges</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item active"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div style="margin-bottom: var(--space-2xl);">
+                <a href="domains.html" style="color: var(--text-muted); text-decoration: none;">← Back to Domains</a>
+                <h1 style="margin-top: var(--space-sm);">🧘 Mindfulness</h1>
+            </div>
+
+            <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+                <div class="meditation-circle">
+                    <div>
+                        <div style="font-size: 3rem; font-weight: 700; font-family: monospace;" id="timer">10:00</div>
+                        <div id="breath-guide" style="color: var(--text-muted);">Ready...</div>
+                    </div>
+                </div>
+                <div style="margin-top: var(--space-2xl); margin-bottom: var(--space-2xl);">
+                    <button id="timer-btn" class="btn btn-primary" onclick="toggleTimer()">Start Meditation</button>
+                    <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
+                </div>
+
+                <h2>How are you feeling?</h2>
+                <div class="mood-grid">
+                    <button class="mood-btn" onclick="logMood('awful')">😫</button>
+                    <button class="mood-btn" onclick="logMood('bad')">😕</button>
+                    <button class="mood-btn" onclick="logMood('neutral')">😐</button>
+                    <button class="mood-btn" onclick="logMood('good')">🙂</button>
+                    <button class="mood-btn" onclick="logMood('great')">🤩</button>
+                </div>
+
+                <div
+                    style="text-align: left; background: var(--bg-card); padding: var(--space-lg); border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.05);">
+                    <h3>Daily Gratitude</h3>
+                    <textarea
+                        style="width: 100%; background: transparent; border: none; color: white; margin-top: var(--space-md); resize: none;"
+                        rows="3" placeholder="I am grateful for..."></textarea>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        let timeLeft = 600; // 10 minutes
+        let timerId = null;
+        let isBreathing = false;
+
+        function logMood(mood) {
+            // Visual feedback
+            const btns = document.querySelectorAll('.mood-btn');
+            btns.forEach(b => {
+                b.style.transform = 'scale(1)';
+                b.style.background = 'var(--bg-card)';
+            });
+
+            // Find clicked button based on onclick attribute - simpler to just use event.target pattern but strict mode here
+            const moodMap = {
+                'awful': 0, 'bad': 1, 'neutral': 2, 'good': 3, 'great': 4
+            };
+            const index = moodMap[mood];
+            if (index !== undefined) {
+                btns[index].style.transform = 'scale(1.1)';
+                btns[index].style.background = 'rgba(255,255,255,0.2)';
+            }
+
+            alert(`Mood logged: ${mood}`);
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('timer-btn');
+            const guide = document.getElementById('breath-guide');
+
+            if (timerId) {
+                // Pause
+                clearInterval(timerId);
+                timerId = null;
+                btn.innerText = "Resume Meditation";
+                guide.innerText = "Paused";
+                return;
+            }
+
+            btn.innerText = "Pause Meditation";
+            guide.innerText = "Breathe In...";
+
+            timerId = setInterval(() => {
+                timeLeft--;
+                updateDisplay();
+
+                // Simple breath guide logic
+                if (timeLeft % 10 === 0) guide.innerText = "Breathe In...";
+                else if (timeLeft % 10 === 5) guide.innerText = "Breathe Out...";
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    timerId = null;
+                    alert("Namaste. Meditation complete.");
+                    timeLeft = 600;
+                    updateDisplay();
+                    btn.innerText = "Start Meditation";
+                    guide.innerText = "Ready...";
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(timerId);
+            timerId = null;
+            timeLeft = 600;
+            updateDisplay();
+            document.getElementById('timer-btn').innerText = "Start Meditation";
+            document.getElementById('breath-guide').innerText = "Ready...";
+        }
+
+        function updateDisplay() {
+            const m = Math.floor(timeLeft / 60);
+            const s = timeLeft % 60;
+            document.getElementById('timer').textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+
+</html>

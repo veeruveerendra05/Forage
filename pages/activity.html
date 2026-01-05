@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        /* Reuse layout */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .device-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .device-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-family: var(--font-display);
+            font-weight: 800;
+            margin-bottom: var(--space-xs);
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.1em;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--error);
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a href="/" class="logo"
+                style="display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; margin-bottom: var(--space-2xl); color: white;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)">
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                    </path>
+                </svg>
+                Goal<span style="color: #8b5cf6;">Forge</span>
+            </a>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item active"><span>⌚</span> Activity</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <!-- Header with notifications and profile -->
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2xl);">
+                <div class="header">
+                    <h1>Activity Tracking</h1>
+                    <div class="flex gap-md items-center">
+                        <span class="live-indicator"></span>
+                        <span style="color: var(--text-muted); font-size: 0.875rem;">Live Data</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--space-md);">
+                    <button class="icon-btn" style="position: relative;">
+                        <span style="font-size: 1.25rem;">🔔</span>
+                    </button>
+                    <a href="profile.html" style="text-decoration: none;">
+                        <div class="avatar" style="width: 40px; height: 40px; cursor: pointer;">
+                            <span style="font-size: 1rem;">U</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="device-grid">
+                <div class="device-card">
+                    <div class="flex items-center gap-md">
+                        <div
+                            style="width: 40px; height: 40px; background: #34c759; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            ⌚</div>
+                        <div>
+                            <div style="font-weight: 600;">Apple Watch</div>
+                            <div style="color: var(--success); font-size: 0.75rem;">Connected</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline" style="padding: 4px 12px; font-size: 0.75rem;">Config</button>
+                </div>
+
+                <div class="device-card" style="opacity: 0.5;">
+                    <div class="flex items-center gap-md">
+                        <div
+                            style="width: 40px; height: 40px; background: #00b0b9; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            F</div>
+                        <div>
+                            <div style="font-weight: 600;">Fitbit</div>
+                            <div style="color: var(--text-muted); font-size: 0.75rem;">Not Connected</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline" style="padding: 4px 12px; font-size: 0.75rem;">Connect</button>
+                </div>
+            </div>
+
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-value text-gradient" id="steps-val">0</div>
+                    <div class="metric-label">Steps Today</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--error);" id="hr-val">0</div>
+                    <div class="metric-label">Heart Rate (BPM)</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--warning);" id="cal-val">0</div>
+                    <div class="metric-label">Active Calories</div>
+                </div>
+            </div>
+
+            <div style="margin-top: var(--space-2xl);">
+                <h3>Weekly Trend</h3>
+                <div id="activity-chart"
+                    style="background: var(--bg-card); height: 200px; border-radius: var(--radius-lg); margin-top: var(--space-md); border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: flex-end; padding: 20px; gap: 20px;">
+                    <!-- Chart injected by JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Simulation
+        setInterval(() => {
+            // Steps increment occasionally
+            if (Math.random() > 0.7) {
+                let s = parseInt(document.getElementById('steps-val').innerText.replace(',', ''));
+                document.getElementById('steps-val').innerText = (s + Math.floor(Math.random() * 10)).toLocaleString();
+
+                let c = parseInt(document.getElementById('cal-val').innerText);
+                document.getElementById('cal-val').innerText = c + 1;
+            }
+
+            // Heart rate fluctuates
+            let hr = 70 + Math.floor(Math.random() * 10);
+            document.getElementById('hr-val').innerText = hr;
+
+        }, 2000);
+
+        // Chart render
+        function renderChart() {
+            const chart = document.getElementById('activity-chart');
+            const bars = 7;
+            const todayIndex = 4; // Mock today
+            let html = '';
+
+            for (let i = 0; i < bars; i++) {
+                const height = Math.floor(Math.random() * 60) + 30; // 30-90%
+                const isToday = i === todayIndex;
+                const opacity = isToday ? '1' : '0.5';
+                const shadow = isToday ? 'box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);' : '';
+
+                html += `<div style="flex: 1; background: var(--primary); height: ${height}%; opacity: ${opacity}; border-radius: 4px; ${shadow} transition: height 0.5s;"></div>`;
+            }
+            chart.innerHTML = html;
+        }
+
+        renderChart();
+        // Update chart occasionally
+        setInterval(renderChart, 5000); // Dynamic feel
+    </script>
+</body>
+
+</html>

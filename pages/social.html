@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        /* Tabs */
+        .social-tabs {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xl);
+        }
+
+        .social-tab {
+            padding: var(--space-sm) var(--space-lg);
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .social-tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .social-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .social-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .social-panel.active {
+            display: block;
+        }
+
+        /* Invite Card */
+        .invite-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2xl);
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .invite-code-box {
+            background: var(--bg-surface);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--space-md) var(--space-xl);
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            margin: var(--space-lg) 0;
+            display: inline-block;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .invite-code-box:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* Connection Cards */
+        .connection-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .connection-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            transition: all 0.2s;
+        }
+
+        .connection-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .connection-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .avatar svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .badge-icon {
+            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: var(--space-sm);
+        }
+
+        /* Friend Streak Calendar */
+        .streak-calendar-section {
+            margin-top: var(--space-2xl);
+        }
+
+        .streak-calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--space-xl);
+        }
+
+        .friend-streak-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .friend-streak-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+
+        .friend-streak-header .avatar {
+            width: 40px;
+            height: 40px;
+        }
+
+        .streak-info {
+            flex: 1;
+        }
+
+        .streak-info h4 {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .streak-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.875rem;
+            color: #f59e0b;
+        }
+
+        /* Mini Streak Calendar */
+        .mini-streak-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .mini-cal-day {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+            color: var(--text-dim);
+            position: relative;
+        }
+
+        .mini-cal-day.completed {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(139, 92, 246, 0.5));
+            color: white;
+        }
+
+        .mini-cal-day.completed.streak-3 {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.6), rgba(6, 182, 212, 0.6));
+        }
+
+        .mini-cal-day.completed.streak-7 {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.7), rgba(239, 68, 68, 0.7));
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
+        }
+
+        .mini-cal-day.today {
+            border: 2px solid var(--primary);
+        }
+
+        .mini-cal-header {
+            font-size: 0.625rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Streak Legend */
+        .streak-legend {
+            display: flex;
+            gap: var(--space-lg);
+            margin-top: var(--space-md);
+            padding-top: var(--space-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        /* Streak Comparison */
+        .streak-comparison {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin-top: var(--space-xl);
+        }
+
+        .comparison-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .comparison-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: var(--space-md);
+            height: 200px;
+            padding-top: var(--space-lg);
+        }
+
+        .comparison-bar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .bar-fill {
+            width: 100%;
+            max-width: 60px;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            transition: height 0.5s ease;
+        }
+
+        .bar-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .bar-value {
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2xl);
+            max-width: 500px;
+            width: 90%;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-xs);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a href="/" class="logo"
+                style="display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; margin-bottom: var(--space-2xl); color: white;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)">
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                    </path>
+                </svg>
+                Goal<span style="color: #8b5cf6;">Forge</span>
+            </a>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item active"><span>👥</span> Social</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+
+            <div style="margin-top: auto;">
+                <a href="profile.html" class="nav-item"><span>⚙️</span> Settings</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Your Squad</h1>
+                <button class="btn btn-primary" onclick="openInviteModal()">➕ Add Friend</button>
+            </div>
+
+            <!-- Social Tabs -->
+            <div class="social-tabs">
+                <button class="social-tab active" data-tab="friends">👥 Friends</button>
+                <button class="social-tab" data-tab="streaks">🔥 Streak Calendar</button>
+                <button class="social-tab" data-tab="compare">📊 Compare</button>
+            </div>
+
+            <!-- Friends Panel -->
+            <div class="social-panel active" id="panel-friends">
+                <div class="invite-card">
+                    <h2>Invite Friends & Compete</h2>
+                    <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">
+                        Invite others to join your plan. As the inviter, you can see their progress, but they won't see
+                        each other's details. Build your community!
+                    </p>
+
+                    <div class="invite-code-box" id="invite-code" onclick="copyInviteCode()">
+                        <span id="user-invite-code">GF-XXXX-XXX</span>
+                        <div
+                            style="font-size: 0.75rem; font-family: var(--font-sans); color: var(--text-muted); margin-top: 8px;">
+                            Click to copy
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: var(--space-lg);">Your Connections (<span id="friend-count">0</span>)</h3>
+                <div class="connection-list" id="friend-list">
+                    <!-- Friends will be loaded here -->
+                    <div
+                        style="color: var(--text-muted); grid-column: 1 / -1; text-align: center; padding: var(--space-2xl);">
+                        Loading friends...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Streak Calendar Panel -->
+            <div class="social-panel" id="panel-streaks">
+                <h2 style="margin-bottom: var(--space-lg);">🔥 Friend Streak Calendars</h2>
+                <p style="color: var(--text-muted); margin-bottom: var(--space-xl);">
+                    Track your friends' consistency and celebrate their streak milestones!
+                </p>
+
+                <div class="streak-calendar-grid" id="streak-calendar-grid">
+                    <!-- Friend streak calendars will be loaded here -->
+                </div>
+
+                <div class="streak-legend" style="margin-top: var(--space-xl);">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(255, 255, 255, 0.05);"></div>
+                        <span>No activity</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color"
+                            style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(139, 92, 246, 0.5));">
+                        </div>
+                        <span>Active day</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color"
+                            style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.6), rgba(6, 182, 212, 0.6));">
+                        </div>
+                        <span>3+ day streak</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color"
+                            style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.7), rgba(239, 68, 68, 0.7));">
+                        </div>
+                        <span>7+ day streak 🔥</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compare Panel -->
+            <div class="social-panel" id="panel-compare">
+                <div class="streak-comparison">
+                    <div class="comparison-header">
+                        <h2>📊 Streak Comparison</h2>
+                        <select class="form-input" style="width: auto;" id="comparison-timeframe">
+                            <option value="week">This Week</option>
+                            <option value="month" selected>This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+
+                    <div class="comparison-chart" id="comparison-chart">
+                        <!-- Comparison bars will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Leaderboard section -->
+                <div class="streak-comparison" style="margin-top: var(--space-xl);">
+                    <h3 style="margin-bottom: var(--space-lg);">🏆 Friend Leaderboard</h3>
+                    <div id="friend-leaderboard">
+                        <!-- Leaderboard will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Friend Modal -->
+    <div class="modal-overlay" id="invite-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Add a Friend</h2>
+                <button class="modal-close" onclick="closeInviteModal()">&times;</button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Enter Friend's Invite Code</label>
+                <input type="text" class="form-input" id="friend-code-input" placeholder="GF-XXXX-XXX">
+            </div>
+
+            <div style="display: flex; gap: var(--space-md);">
+                <button class="btn btn-outline" style="flex: 1;" onclick="closeInviteModal()">Cancel</button>
+                <button class="btn btn-primary" style="flex: 1;" onclick="addFriendByCode()">Add Friend</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/feature-tour.js" type="module"></script>
+    <script type="module" src="../js/social.js"></script>
+</body>
+
+</html>

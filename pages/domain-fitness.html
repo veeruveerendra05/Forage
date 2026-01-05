@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness & Health - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .stat-box {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+        }
+
+        .workout-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-md);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a href="/" class="logo"
+                style="display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; margin-bottom: var(--space-2xl); color: white;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)">
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                    </path>
+                </svg>
+                Goal<span style="color: #8b5cf6;">Forge</span>
+            </a>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="challenges.html" class="nav-item"><span>⚔️</span> Challenges</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item active"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2xl);">
+                <div>
+                    <div
+                        style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xs);">
+                        <a href="domains.html" style="color: var(--text-muted); text-decoration: none;">← Back to
+                            Domains</a>
+                    </div>
+                    <h1>🏃 Fitness & Health</h1>
+                    <p style="color: var(--text-muted); margin-top: 4px;">Track workouts, nutrition, and health metrics
+                    </p>
+                </div>
+                <button class="btn btn-primary" onclick="openLogWorkoutModal()">➕ Log Workout</button>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">Workouts This Week</div>
+                    <div class="stat-value" id="weekly-workouts">0</div>
+                    <div class="stat-change">Goal: 5</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Calories Burned</div>
+                    <div class="stat-value" style="color: #ef4444;" id="calories-burned">0</div>
+                    <div class="stat-change">kcal today</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Steps Today</div>
+                    <div class="stat-value" style="color: #10b981;" id="steps-today">0</div>
+                    <div class="stat-change">Goal: 10,000</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Water Intake</div>
+                    <div class="stat-value" style="color: #3b82f6;" id="water-intake">0</div>
+                    <div class="stat-change">/ 8 glasses</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs" style="margin-bottom: var(--space-xl);">
+                <button class="tab-btn active" onclick="switchTab('workouts')">Workouts</button>
+                <button class="tab-btn" onclick="switchTab('nutrition')">Nutrition</button>
+                <button class="tab-btn" onclick="switchTab('progress')">Progress</button>
+            </div>
+
+            <!-- Workouts Tab -->
+            <div id="tab-workouts" class="tab-content active">
+                <div id="workouts-list">
+                    <div style="text-align: center; padding: var(--space-2xl); color: var(--text-muted);">
+                        <div style="font-size: 3rem; margin-bottom: var(--space-md);">💪</div>
+                        <p>No workouts logged yet</p>
+                        <p style="font-size: 0.875rem; margin-top: var(--space-sm);">Start tracking your fitness
+                            journey!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nutrition Tab -->
+            <div id="tab-nutrition" class="tab-content" style="display: none;">
+                <div class="stat-box">
+                    <h2 style="margin-bottom: var(--space-lg);">🥗 Daily Nutrition</h2>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg);">
+                        <div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 4px;">Calories
+                            </div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">0 / 2000</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 4px;">Protein
+                            </div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">0g / 150g</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 4px;">Carbs</div>
+                            <div style="font-size: 1.5rem; font-weight: 700;">0g / 250g</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: var(--space-xl); width: 100%;">Log Meal</button>
+                </div>
+            </div>
+
+            <!-- Progress Tab -->
+            <div id="tab-progress" class="tab-content" style="display: none;">
+                <div class="stat-box">
+                    <h2 style="margin-bottom: var(--space-lg);">📈 Progress Tracking</h2>
+                    <p style="color: var(--text-muted);">Track your weight, measurements, and fitness goals over time
+                    </p>
+                    <div style="margin-top: var(--space-xl); text-align: center; color: var(--text-muted);">
+                        <p>No progress data yet</p>
+                        <button class="btn btn-outline" style="margin-top: var(--space-md);">Add Measurement</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Log Workout Modal -->
+    <div id="log-workout-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Log Workout</h2>
+                <button class="close-btn" onclick="closeLogWorkoutModal()">&times;</button>
+            </div>
+            <form id="log-workout-form" onsubmit="logWorkout(event)">
+                <div class="form-group">
+                    <label class="form-label">Workout Type</label>
+                    <select class="form-select" id="workout-type" required>
+                        <option value="cardio">Cardio</option>
+                        <option value="strength">Strength Training</option>
+                        <option value="yoga">Yoga</option>
+                        <option value="sports">Sports</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Duration (minutes)</label>
+                        <input type="number" class="form-input" id="workout-duration" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Calories Burned</label>
+                        <input type="number" class="form-input" id="workout-calories" min="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Notes (optional)</label>
+                    <textarea class="form-input" id="workout-notes" rows="3" placeholder="How did it go?"></textarea>
+                </div>
+                <div style="display: flex; gap: var(--space-md); margin-top: var(--space-xl);">
+                    <button type="button" class="btn btn-outline" style="flex: 1;"
+                        onclick="closeLogWorkoutModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Log Workout</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let workouts = [];
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tabName}`).style.display = 'block';
+        }
+
+        function openLogWorkoutModal() {
+            document.getElementById('log-workout-modal').classList.add('active');
+        }
+
+        function closeLogWorkoutModal() {
+            document.getElementById('log-workout-modal').classList.remove('active');
+            document.getElementById('log-workout-form').reset();
+        }
+
+        function logWorkout(event) {
+            event.preventDefault();
+
+            const workout = {
+                id: Date.now(),
+                type: document.getElementById('workout-type').value,
+                duration: parseInt(document.getElementById('workout-duration').value),
+                calories: parseInt(document.getElementById('workout-calories').value) || 0,
+                notes: document.getElementById('workout-notes').value,
+                date: new Date().toLocaleDateString()
+            };
+
+            workouts.unshift(workout);
+            renderWorkouts();
+            updateStats();
+            closeLogWorkoutModal();
+        }
+
+        function renderWorkouts() {
+            const container = document.getElementById('workouts-list');
+
+            if (workouts.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: var(--space-2xl); color: var(--text-muted);">
+                        <div style="font-size: 3rem; margin-bottom: var(--space-md);">💪</div>
+                        <p>No workouts logged yet</p>
+                        <p style="font-size: 0.875rem; margin-top: var(--space-sm);">Start tracking your fitness journey!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = workouts.map(w => `
+                <div class="workout-card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <h3 style="text-transform: capitalize; margin-bottom: 4px;">${w.type}</h3>
+                            <div style="color: var(--text-muted); font-size: 0.875rem;">${w.date}</div>
+                        </div>
+                        <button class="btn btn-outline" style="padding: 4px 12px; font-size: 0.75rem;" onclick="deleteWorkout(${w.id})">Delete</button>
+                    </div>
+                    <div style="display: flex; gap: var(--space-lg); margin-top: var(--space-md);">
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">Duration</div>
+                            <div style="font-weight: 600;">${w.duration} min</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">Calories</div>
+                            <div style="font-weight: 600;">${w.calories} kcal</div>
+                        </div>
+                    </div>
+                    ${w.notes ? `<p style="margin-top: var(--space-md); font-size: 0.875rem; color: var(--text-muted);">${w.notes}</p>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function deleteWorkout(id) {
+            workouts = workouts.filter(w => w.id !== id);
+            renderWorkouts();
+            updateStats();
+        }
+
+        function updateStats() {
+            const thisWeek = workouts.filter(w => {
+                const workoutDate = new Date(w.date);
+                const weekAgo = new Date();
+                weekAgo.setDate(weekAgo.getDate() - 7);
+                return workoutDate >= weekAgo;
+            });
+
+            const todayCalories = workouts.filter(w => w.date === new Date().toLocaleDateString())
+                .reduce((sum, w) => sum + w.calories, 0);
+
+            document.getElementById('weekly-workouts').textContent = thisWeek.length;
+            document.getElementById('calories-burned').textContent = todayCalories;
+        }
+
+        renderWorkouts();
+        updateStats();
+    </script>
+</body>
+
+</html>

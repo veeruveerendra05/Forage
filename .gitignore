@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Database files (don't commit user data)
+db/goalforge.db
+db/goalforge.db-shm
+db/goalforge.db-wal
+*.db
+*.db-journal
+
+# Environment variables
+.env
+.env.local
+
+# Build outputs
+dist/
+build/
+.vite/
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Gemini artifacts (optional - these are planning docs)
+.gemini/

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenges - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        /* Challenge Grid */
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .challenge-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .challenge-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .challenge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: var(--space-md);
+        }
+
+        .challenge-badge {
+            padding: 4px 12px;
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-active {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .badge-completed {
+            background: rgba(99, 102, 241, 0.2);
+            color: #6366f1;
+        }
+
+        .challenge-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+        }
+
+        .challenge-description {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-bottom: var(--space-md);
+            line-height: 1.5;
+        }
+
+        .challenge-meta {
+            display: flex;
+            gap: var(--space-lg);
+            padding-top: var(--space-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.875rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+        }
+
+        /* Challenge Detail View */
+        .challenge-detail {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+            overflow-y: auto;
+            padding: var(--space-xl);
+        }
+
+        .challenge-detail.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-container {
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            max-width: 1200px;
+            width: 100%;
+            max-height: 90vh;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            overflow: hidden;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .detail-main {
+            padding: var(--space-2xl);
+            overflow-y: auto;
+        }
+
+        .detail-sidebar {
+            background: var(--bg-card);
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: var(--space-xl);
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: var(--text-muted);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* Leaderboard */
+        .challenge-leaderboard {
+            margin-top: var(--space-xl);
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-sm);
+        }
+
+        .rank {
+            font-size: 1.25rem;
+            font-weight: 700;
+            min-width: 40px;
+        }
+
+        .rank-1 {
+            color: #f59e0b;
+        }
+
+        .rank-2 {
+            color: #94a3b8;
+        }
+
+        .rank-3 {
+            color: #cd7f32;
+        }
+
+        .participant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .participant-avatar svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .participant-info {
+            flex: 1;
+        }
+
+        .participant-score {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Chat Region */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-header {
+            padding: var(--space-lg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .chat-message {
+            display: flex;
+            gap: var(--space-sm);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .message-avatar svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-author {
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 2px;
+        }
+
+        .message-text {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .chat-input {
+            padding: var(--space-lg);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .input-group {
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        .chat-input-field {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            color: white;
+            font-size: 0.875rem;
+            resize: none;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .chat-input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        .send-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .send-btn:hover {
+            background: #5558e3;
+            transform: translateY(-1px);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2xl);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-xs);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: var(--space-2xl);
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: var(--space-md);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a href="/" class="logo"
+                style="display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; margin-bottom: var(--space-2xl); color: white;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)">
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                    </path>
+                </svg>
+                Goal<span style="color: #8b5cf6;">Forge</span>
+            </a>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="challenges.html" class="nav-item active"><span>⚔️</span> Challenges</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+
+            <div style="margin-top: auto;">
+                <a href="profile.html" class="nav-item"><span>⚙️</span> Settings</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <div>
+                    <h1>⚔️ Challenges</h1>
+                    <p style="color: var(--text-muted); margin-top: 4px;">Compete with friends and push your limits</p>
+                </div>
+                <button class="btn btn-primary" onclick="openCreateModal()">➕ Create Challenge</button>
+            </div>
+
+            <!-- Active Challenges -->
+            <h2 style="margin-bottom: var(--space-lg);">Active Challenges</h2>
+            <div class="challenge-grid" id="challenge-grid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">⚔️</div>
+                    <p>Loading challenges...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Challenge Detail Modal -->
+    <div class="challenge-detail" id="challenge-detail">
+        <div class="detail-container">
+            <div class="detail-main">
+                <div class="detail-header">
+                    <div>
+                        <h2 id="detail-title">Challenge Title</h2>
+                        <p id="detail-description" style="color: var(--text-muted); margin-top: 8px;"></p>
+                    </div>
+                    <button class="close-btn" onclick="closeDetailModal()">&times;</button>
+                </div>
+
+                <div style="display: flex; gap: var(--space-lg); margin-bottom: var(--space-xl);">
+                    <div class="stat-box" style="flex: 1;">
+                        <div class="stat-label">Goal</div>
+                        <div class="stat-value" id="detail-goal">-</div>
+                    </div>
+                    <div class="stat-box" style="flex: 1;">
+                        <div class="stat-label">Participants</div>
+                        <div class="stat-value" id="detail-participants">-</div>
+                    </div>
+                    <div class="stat-box" style="flex: 1;">
+                        <div class="stat-label">Ends</div>
+                        <div class="stat-value" id="detail-ends">-</div>
+                    </div>
+                </div>
+
+                <div class="challenge-leaderboard">
+                    <h3 style="margin-bottom: var(--space-md);">🏆 Leaderboard</h3>
+                    <div id="challenge-leaderboard-list">
+                        <!-- Leaderboard items will be inserted here -->
+                    </div>
+                </div>
+
+                <div style="margin-top: var(--space-xl);">
+                    <button class="btn btn-primary" id="join-btn" onclick="joinCurrentChallenge()">Join
+                        Challenge</button>
+                    <button class="btn btn-outline" style="margin-left: var(--space-sm);" onclick="updateScore()">Update
+                        My Score</button>
+                </div>
+            </div>
+
+            <div class="detail-sidebar">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h3>💬 Discussion</h3>
+                        <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 4px;">Chat with
+                            participants</p>
+                    </div>
+
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- Messages will be inserted here -->
+                    </div>
+
+                    <div class="chat-input">
+                        <div class="input-group">
+                            <textarea class="chat-input-field" id="message-input" placeholder="Type a message..."
+                                rows="2"></textarea>
+                            <button class="send-btn" onclick="sendMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Challenge Modal -->
+    <div class="modal-overlay" id="create-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Create New Challenge</h2>
+                <button class="close-btn" onclick="closeCreateModal()">&times;</button>
+            </div>
+
+            <form id="create-form" onsubmit="createChallenge(event)">
+                <div class="form-group">
+                    <label class="form-label">Challenge Title</label>
+                    <input type="text" class="form-input" id="challenge-title" required
+                        placeholder="30-Day Fitness Challenge">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="challenge-description"
+                        placeholder="Complete 10,000 steps every day for 30 days"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Goal Type</label>
+                        <select class="form-select" id="challenge-goal-type" required>
+                            <option value="steps">Daily Steps</option>
+                            <option value="habits">Habit Streak</option>
+                            <option value="reading">Pages Read</option>
+                            <option value="coding">Problems Solved</option>
+                            <option value="custom">Custom Goal</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Target</label>
+                        <input type="number" class="form-input" id="challenge-target" required placeholder="10000">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-input" id="challenge-start" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-input" id="challenge-end" required>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: var(--space-md); margin-top: var(--space-xl);">
+                    <button type="button" class="btn btn-outline" style="flex: 1;"
+                        onclick="closeCreateModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Create Challenge</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/feature-tour.js" type="module"></script>
+    <script type="module" src="../js/challenges.js"></script>
+</body>
+
+</html>

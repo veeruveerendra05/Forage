@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        /* Reuse sidebar styles from dashboard - ideally would be a component */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        /* Calendar Specifics */
+        .calendar-container {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        .month-nav {
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .cal-cell {
+            background: var(--bg-card);
+            min-height: 120px;
+            padding: var(--space-sm);
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        .cal-cell:hover {
+            background: var(--bg-surface);
+        }
+
+        .cal-header {
+            background: var(--bg-surface);
+            padding: var(--space-sm);
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-muted);
+            min-height: auto;
+        }
+
+        .day-number {
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .cal-cell.today .day-number {
+            background: var(--primary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cal-event {
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+
+        .cal-event.fitness {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .cal-event.coding {
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+        }
+
+        .cal-event.reading {
+            background: rgba(236, 72, 153, 0.2);
+            color: #f472b6;
+        }
+
+        /* Heatmap */
+        .heatmap-section {
+            margin-top: var(--space-2xl);
+        }
+
+        .heatmap-grid {
+            display: flex;
+            gap: 4px;
+            margin-top: var(--space-md);
+            flex-wrap: wrap;
+        }
+
+        .heatmap-box {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .level-1 {
+            background: rgba(99, 102, 241, 0.3);
+        }
+
+        .level-2 {
+            background: rgba(99, 102, 241, 0.5);
+        }
+
+        .level-3 {
+            background: rgba(99, 102, 241, 0.7);
+        }
+
+        .level-4 {
+            background: rgba(99, 102, 241, 1.0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a href="/" class="logo"
+                style="display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; margin-bottom: var(--space-2xl); color: white;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)">
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                    </path>
+                </svg>
+                Goal<span style="color: #8b5cf6;">Forge</span>
+            </a>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item active"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="calendar-header">
+                <h1>Your Consistency</h1>
+                <div class="month-nav">
+                    <button class="btn btn-outline" id="prev-month">&lt;</button>
+                    <span class="btn btn-outline" style="min-width: 150px;" id="current-month-display">September
+                        2024</span>
+                    <button class="btn btn-outline" id="next-month">&gt;</button>
+                </div>
+            </div>
+
+            <div class="calendar-container">
+                <div class="calendar-grid" id="calendar-grid">
+                    <!-- JS generated -->
+                </div>
+            </div>
+
+            <div class="heatmap-section">
+                <h3>Yearly Activity Heatmap</h3>
+                <p style="color: var(--text-muted); font-size: 0.875rem;">1,240 contributions in the last year</p>
+                <div class="heatmap-grid" id="heatmap">
+                    <!-- JS generated -->
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../js/calendar.js" type="module"></script>
+</body>
+
+</html>

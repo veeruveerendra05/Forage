@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creativity - GoalForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            margin-bottom: var(--space-xs);
+            text-decoration: none;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .main-content {
+            padding: var(--space-xl);
+            overflow-y: auto;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .project-card {
+            aspect-ratio: 1;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: var(--space-lg);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        }
+
+        .add-project {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .add-project:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div style="margin-bottom: var(--space-xl); padding-left: var(--space-md);">
+                <span
+                    style="font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em;">GoalForge</span>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="nav-item"><span>📊</span> Dashboard</a>
+                <a href="calendar.html" class="nav-item"><span>📅</span> Calendar</a>
+                <a href="habits.html" class="nav-item"><span>✅</span> Habits</a>
+                <a href="goals.html" class="nav-item"><span>🎯</span> Goals</a>
+                <a href="social.html" class="nav-item"><span>👥</span> Social</a>
+                <a href="challenges.html" class="nav-item"><span>⚔️</span> Challenges</a>
+                <a href="leaderboard.html" class="nav-item"><span>🏆</span> Leaderboard</a>
+                <a href="domains.html" class="nav-item active"><span>🧠</span> Domains</a>
+                <a href="activity.html" class="nav-item"><span>⌚</span> Activity</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div style="margin-bottom: var(--space-2xl);">
+                <a href="domains.html" style="color: var(--text-muted); text-decoration: none;">← Back to Domains</a>
+                <h1 style="margin-top: var(--space-sm);">🎨 Creativity & Projects</h1>
+            </div>
+
+            <h2 style="margin-bottom: var(--space-lg);">My Portfolio</h2>
+            <div class="project-grid">
+                <div class="project-card add-project" onclick="createProject()">
+                    <span style="font-size: 3rem;">+</span>
+                    <span>New Project</span>
+                </div>
+                <!-- Placeholders -->
+                <div class="project-card">
+                    <div style="width: 100%; height: 100%; background: #3b82f6;"></div>
+                    <div class="project-overlay">
+                        <h3>Abstract Art</h3>
+                        <p style="font-size: 0.875rem; color: #cbd5e1;">In Progress</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div style="width: 100%; height: 100%; background: #ef4444;"></div>
+                    <div class="project-overlay">
+                        <h3>UI Design System</h3>
+                        <p style="font-size: 0.875rem; color: #cbd5e1;">Completed</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div style="width: 100%; height: 100%; background: #10b981;"></div>
+                    <div class="project-overlay">
+                        <h3>Photography</h3>
+                        <p style="font-size: 0.875rem; color: #cbd5e1;">Collection</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="margin-top: var(--space-2xl); margin-bottom: var(--space-lg);">Inspiration Board</h2>
+            <div
+                style="background: var(--bg-card); border-radius: var(--radius-lg); padding: var(--space-xl); text-align: center; border: 1px dashed rgba(255,255,255,0.1);">
+                <p style="color: var(--text-muted);">Drag and drop images here to build your moodboard.</p>
+            </div>
+        </main>
+    </div>
+    <script>
+        function createProject() {
+            const name = prompt("Project Name:");
+            if (!name) return;
+
+            const type = prompt("Project Type (e.g., Art, Code, Writing):");
+            const color = '#' + Math.floor(Math.random() * 16777215).toString(16); // Random color for placeholder
+
+            const grid = document.querySelector('.project-grid');
+            // Insert after the add button (first child)
+            const addBtn = grid.firstElementChild;
+
+            const newCard = document.createElement('div');
+            newCard.className = 'project-card';
+            newCard.innerHTML = `
+                <div style="width: 100%; height: 100%; background: ${color};"></div>
+                <div class="project-overlay">
+                    <h3>${name}</h3>
+                    <p style="font-size: 0.875rem; color: #cbd5e1;">${type} • In Progress</p>
+                </div>
+            `;
+
+            // Insert after the add button
+            addBtn.insertAdjacentElement('afterend', newCard);
+        }
+    </script>
+</body>
+
+</html>
