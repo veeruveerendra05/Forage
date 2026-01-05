@@ -278,7 +278,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Team
 
-- **Your Name** - *Lead Developer* - [@yourusername](https://github.com/yourusername)
+- **K VEERENDRA** - *Lead Developer* - [@veeruveerendra05](https://github.com/veeruveerendra05)
 
 ## 🙏 Acknowledgments
 
@@ -291,8 +291,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📧 Email: support@goalforge.com
 - 💬 Discord: [Join our community](https://discord.gg/goalforge)
 - 📖 Docs: [docs.goalforge.com](https://docs.goalforge.com)
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/goalforge/issues)
+- 🐛 Issues: [GitHub Issues](https://github.com/veeruveerendra05/Forage/issues)
 
 ---
 
-**Made with ❤️ by the GoalForge Team**
+**Made with ❤️ by the Forage Team**
